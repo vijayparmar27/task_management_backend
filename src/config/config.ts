@@ -13,6 +13,9 @@ const {
   REDIS_PORT,
   MONGO_SRV,
   JWT_SECRET,
+  NODEMAILER_EMAIL,
+  NODEMAILER_PASSWORD,
+  FONTEND_URL,
 } = CONFIG;
 
 dotenv.config();
@@ -35,6 +38,11 @@ const Config: IConfig = {
     processEnv[MONGO_SRV] ?? "mongodb://127.0.0.1:27017/task_management",
 
   JWT_SECRET: processEnv[JWT_SECRET] ?? "JWT_SECRET",
+
+  NODEMAILER_EMAIL: processEnv[NODEMAILER_EMAIL] ?? "",
+  NODEMAILER_PASSWORD: processEnv[NODEMAILER_PASSWORD] ?? "",
+
+  FONTEND_URL: processEnv[FONTEND_URL] ?? "http://localhost:3000",
 };
 
 export default Config;

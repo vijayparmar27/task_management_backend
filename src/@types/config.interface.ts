@@ -9,4 +9,9 @@ export interface IConfig {
   REDIS_PORT: number;
   MONGO_SRV: string;
   JWT_SECRET: string;
+
+  NODEMAILER_EMAIL: string;
+  NODEMAILER_PASSWORD: string;
+
+  FONTEND_URL: string;
 }
