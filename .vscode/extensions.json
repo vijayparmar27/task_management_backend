@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "sonarsource.sonarlint-vscode",
+    "esbenp.prettier-vscode",
+    "rvest.vs-code-prettier-eslint",
+    "pkief.material-icon-theme",
+    "eamodio.gitlens",
+    "donjayamanne.githistory"
+  ]
+}

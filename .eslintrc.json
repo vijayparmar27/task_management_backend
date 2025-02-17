@@ -1,0 +1,88 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "sonarjs"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "rules": {
+    // TypeScript-specific rules
+    "@typescript-eslint/explicit-function-return-type": "warn", // Require explicit return types on functions and class methods
+    "@typescript-eslint/no-explicit-any": "off", // Allow usage of the any type
+    "@typescript-eslint/ban-types": "off", // Ban specific types from being used
+    "@typescript-eslint/no-unused-vars": "warn", // Disallow unused variables
+    
+    // Variable declaration and assignment
+    "prefer-const": "warn", // Require const declarations for variables that are never reassigned after declared
+    "no-global-assign": "error", // Disallow assignment to native objects or read-only global variables
+    "no-prototype-builtins": "off", // Disallow direct use of Object.prototypes builtins directly
+    "no-shadow": "warn", // Disallow variable declarations from shadowing variables declared in the outer scope
+
+    // Code quality and best practices
+    "eqeqeq": "warn", // Require the use of === and !==
+    "complexity": ["warn", 15], // Specify the maximum cyclomatic complexity allowed in a program
+    "consistent-return": "warn", // Require return statements to either always or never specify values
+    "camelcase": "warn", // Enforce camelcase naming convention
+    "default-case": "warn", // Require default cases in switch statements
+    "func-style": ["warn", "expression"], // Enforce arrow function expressions
+    "max-params": ["warn", 5], // Enforce a maximum number of parameters in function definitions
+    "no-case-declarations": "warn", // Disallow lexical declarations in case clauses
+    "no-empty": "warn", // Disallow empty block statements
+    "no-else-return": "warn", // Disallow else blocks after return statements in if statements
+    "no-nested-ternary": "warn", // Disallow nested ternary expressions
+    "no-var": "error", // Require let or const instead of var
+    "prefer-template": "error", // Require template literals instead of string concatenation
+    "require-await": "warn", // Disallow async functions which have no await expression
+    "vars-on-top": "warn", // Require var declarations be placed at the top of their containing scope
+
+    // Console and debugging
+    "no-console": ["warn", { "allow": ["warn", "error", "info"] }], // Disallow the use of console, except for console.warn and console.error
+    "no-debugger": "warn", // Disallow the use of debugger
+
+    // Control flow and conditional statements
+    "no-cond-assign": "warn", // Disallow assignment operators in conditional expressions
+    "no-unsafe-finally": "warn", // Disallow control flow statements in finally blocks
+    "valid-typeof": "error", // Enforce comparing typeof expressions against valid strings
+
+    // Switch statements
+    "no-fallthrough": "error", // Disallow fallthrough of case statements
+
+    // Function definitions
+    "no-dupe-args": "error", // Disallow duplicate arguments in function definitions
+
+    // Imports and duplicates
+    "no-duplicate-imports": "error", // Disallow duplicate module imports
+
+    // Comments and warnings
+    "no-warning-comments": ["warn", { "terms": ["todo", "fixme", "xxx"], "location": "start" }], // Disallow specified warning terms in comments
+
+    // Regular expressions
+    "no-invalid-regexp": "warn", // Disallow invalid regular expression strings in RegExp constructors
+
+    // SonarJS-specific rules
+    "sonarjs/cognitive-complexity": "warn", // Warn when cognitive complexity is high
+    "sonarjs/max-switch-cases": "warn", // Warn when the number of cases in a switch statement is too high
+    "sonarjs/no-all-duplicated-branches": "warn", // Disallow all branches in a conditional to be the same
+    "sonarjs/no-collapsible-if": "warn", // Disallow collapsible if statements
+    "sonarjs/no-collection-size-mischeck": "warn", // Disallow incorrect checks for collection sizes
+    // "sonarjs/no-duplicate-string": "warn", // Disallow duplicate strings
+    "sonarjs/no-duplicated-branches": "warn", // Disallow duplicated branches in conditionals
+    "sonarjs/no-element-overwrite": "warn", // Disallow overwriting elements in collections
+    "sonarjs/no-empty-collection": "warn", // Disallow empty collections
+    "sonarjs/no-extra-arguments": "warn", // Disallow extra arguments in function calls
+    "sonarjs/no-gratuitous-expressions": "warn", // Disallow unnecessary expressions
+    "sonarjs/no-identical-conditions": "warn", // Disallow identical conditions in conditionals
+    "sonarjs/no-identical-expressions": "warn", // Disallow identical expressions in conditionals
+    "sonarjs/no-identical-functions": "warn", // Disallow identical functions
+    "sonarjs/no-inverted-boolean-check": "warn", // Disallow inverted boolean checks
+    "sonarjs/no-one-iteration-loop": "warn", // Disallow loops that only run once
+    "sonarjs/no-redundant-boolean": "warn", // Disallow redundant boolean literals
+    "sonarjs/no-redundant-jump": "warn", // Disallow redundant jump statements
+    "sonarjs/no-same-line-conditional": "warn", // Disallow conditional statements on the same line
+    "sonarjs/no-small-switch": "warn", // Disallow small switch statements
+    "sonarjs/no-unused-collection": "warn", // Disallow unused collections
+    "sonarjs/no-use-of-empty-return-value": "warn", // Disallow the use of empty return values
+    "sonarjs/no-useless-catch": "warn", // Disallow useless catch blocks
+    "sonarjs/prefer-immediate-return": "warn", // Prefer immediate return of variables
+    "sonarjs/prefer-object-literal": "warn", // Prefer object literals to creating new objects
+    "sonarjs/prefer-single-boolean-return": "warn", // Prefer single boolean return statements
+    "sonarjs/prefer-while": "warn" // Prefer while loops to for loops with a single iteration variable
+  }
+}
