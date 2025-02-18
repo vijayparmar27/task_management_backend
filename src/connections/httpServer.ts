@@ -8,6 +8,7 @@ import Config from "../config/config";
 import logger from "../services/logger.service";
 import Index from "../routers/index.routes";
 import cors from "cors";
+const { DateTime } = require("luxon");
 
 class ServerConnection {
   private readonly server;
@@ -24,8 +25,28 @@ class ServerConnection {
     const uploadFilePath = path.join(__dirname, "../../upload");
     this.app.use(express.static(uploadFilePath));
 
-    this.app.get("/", (req, res, next) => {
-      res.send(`OK.......`);
+    this.app.get("/", (req: any, res: any) => {
+      const date = new Date().toISOString();
+      console.log("timestamp:", Date.now());
+      console.log("date:", date);
+
+      // Convert to Luxon DateTime (UTC first, then to IST)
+      const istDate = DateTime.fromISO(date, { zone: "utc" }).setZone(
+        "Asia/Kolkata"
+      );
+
+      // Return timestamp (in milliseconds)
+      const istTimestamp = istDate.toMillis();
+
+      // Display results
+      console.log("istTimestamp", istTimestamp);
+      console.log("Original Date (UTC):", istDate.toISO());
+      console.log(
+        "Converted Date (IST):",
+        istDate.toFormat("yyyy-MM-dd HH:mm:ss ZZZZ")
+      );
+
+      return res.json({ istDate });
     });
 
     this.app.use("/", Index);

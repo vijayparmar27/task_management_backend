@@ -20,7 +20,7 @@ export interface IProjectModel extends Document {
   //   id: ObjectId;
   //   role: Roles;
   // }[];
-  members : [ObjectId]
+  membersIds: ObjectId[];
   dueDate: number;
 }
 

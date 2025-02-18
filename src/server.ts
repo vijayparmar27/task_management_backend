@@ -1,9 +1,17 @@
 import "./config/config";
 import { initializeConnections } from "./connections/index.connection";
 import logger from "./services/logger.service";
+import { bullQueue } from "./bull/index.bull";
 
 (() => {
   initializeConnections();
+
+  bullQueue.projectCronQueue.addQueue(
+    {},
+    {
+      repeat: { cron: "*/5 * * * *" }, // repeat every 5 minutes
+    }
+  );
 })();
 
 process

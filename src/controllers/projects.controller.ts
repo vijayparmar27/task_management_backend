@@ -11,16 +11,22 @@ export const createProject = async (
     const { status, members, dueDate, title, description } = req.body;
     const { id } = req.headers;
 
+    const membersIds = members.map(
+      (member: any) => new Types.ObjectId(String(member.id))
+    );
+
     const project = new Project({
       userId: new Types.ObjectId(String(id)),
       title,
       description,
       status,
-      members,
+      membersIds: membersIds,
       dueDate: new Date(dueDate).getTime(),
     });
+
     await project.save();
-    return res.status(201).json(project);
+
+    return res.status(201).json({ message: "created successfully." });
   } catch (error) {
     return res.status(500).json({ message: "Error creating project", error });
   }
@@ -33,16 +39,55 @@ export const getProjects = async (
   try {
     const { id } = req.headers;
 
-    const projects = await Project.find({
-      userId: new Types.ObjectId(String(id)),
-    })
-      .populate("userId")
-      .populate("members.id")
-      .select({
-        "userId.members": 0,
-      });
+    const projectsAggregate = await Project.aggregate([
+      {
+        $match: {
+          $or: [
+            {
+              userId: new Types.ObjectId(String(id)),
+            },
+            {
+              membersIds: { $in: [new Types.ObjectId(String(id))] },
+            },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "membersIds",
+          foreignField: "_id",
+          as: "members",
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "users",
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          userId: 1,
+          title: 1,
+          description: 1,
+          status: 1,
+          dueDate: 1,
+          "members._id": 1,
+          "members.name": 1,
+          "members.email": 1,
+          user: {
+            _id: { $arrayElemAt: ["$users._id", 0] },
+            name: { $arrayElemAt: ["$users.name", 0] },
+          },
+        },
+      },
+    ]);
 
-    return res.json({ data: { projects } });
+    return res.json({ data: { projects: projectsAggregate } });
   } catch (error) {
     return res
       .status(500)
@@ -55,13 +100,51 @@ export const getSingleProjects = async (
   res: Response
 ): Promise<any> => {
   try {
-    const project = await Project.findById(req.params.id)
-      .populate("userId")
-      .populate("members.id");
-    if (!project) {
+    const project = await Project.aggregate([
+      {
+        $match: {
+          _id: new Types.ObjectId(req.params.id),
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "membersIds",
+          foreignField: "_id",
+          as: "members",
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "users",
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          userId: 1,
+          title: 1,
+          description: 1,
+          status: 1,
+          dueDate: 1,
+          "members._id": 1,
+          "members.name": 1,
+          "members.email": 1,
+          user: {
+            _id: { $arrayElemAt: ["$users._id", 0] },
+            name: { $arrayElemAt: ["$users.name", 0] },
+          },
+        },
+      },
+    ]);
+
+    if (project.length === 0) {
       return res.status(404).json({ message: "Project not found" });
     }
-    return res.json(project);
+    return res.json({ data: { project: project[0] } });
   } catch (error) {
     return res.status(500).json({ message: "Error retrieving project", error });
   }
@@ -73,9 +156,14 @@ export const updateProject = async (
 ): Promise<any> => {
   try {
     const { status, members, dueDate } = req.body;
+
+    const membersIds = members.map(
+      (member: any) => new Types.ObjectId(String(member.id))
+    );
+
     const project = await Project.findByIdAndUpdate(
       req.params.id,
-      { status, members, dueDate },
+      { status, membersIds, dueDate },
       { new: true }
     );
     if (!project) {

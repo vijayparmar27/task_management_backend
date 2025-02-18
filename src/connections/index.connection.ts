@@ -7,7 +7,7 @@ import { socketConnection } from "./socket";
 export const initializeConnections = async () => {
   try {
     await serverConnection.listenServer();
-    // await redisConnection.redisConnect();
+    await redisConnection.redisConnect();
     await mongoConnection.init();
     // await socketConnection.socketConnect();
   } catch (error) {

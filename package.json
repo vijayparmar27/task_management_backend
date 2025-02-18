@@ -13,6 +13,7 @@
   "dependencies": {
     "@socket.io/redis-streams-adapter": "^0.2.2",
     "bcryptjs": "^3.0.0",
+    "bull": "^4.16.5",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.7",
@@ -20,6 +21,7 @@
     "express-validator": "^7.2.1",
     "graceful-fs": "^4.2.11",
     "jsonwebtoken": "^9.0.2",
+    "luxon": "^3.5.0",
     "moment-timezone": "^0.5.47",
     "mongoose": "^8.10.0",
     "morgan": "^1.10.0",

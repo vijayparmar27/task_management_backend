@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { ProjectStatus, Roles } from "../@types/globle.interface";
+import { ProjectStatus } from "../@types/globle.interface";
 import { IProjectModel } from "../@types/models.interface";
 
 const projectSchema = new Schema<IProjectModel>(
@@ -12,16 +12,12 @@ const projectSchema = new Schema<IProjectModel>(
       enum: Object.values(ProjectStatus),
       required: true,
     },
-    // members: [
-    //   {
-    //     id: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    //     role: { type: String, enum: Object.values(Roles), required: true },
-    //   },
-    // ],
-    members: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    }],
+    membersIds: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     dueDate: { type: Number, required: true },
   },
   {

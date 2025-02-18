@@ -24,8 +24,8 @@ const processEnv = process.env;
 const Config: IConfig = {
   PORT: Number(processEnv[PORT] ?? 8000),
   ENVIROMENT: processEnv[ENVIROMENT] ?? "local",
-  SSL_CRT_FILE: processEnv[SSL_CRT_FILE] ?? "",
-  SSL_KEY_FILE: processEnv[SSL_KEY_FILE] ?? "",
+  SSL_CRT_FILE: processEnv[SSL_CRT_FILE] ?? "../../certificate/file.crt",
+  SSL_KEY_FILE: processEnv[SSL_KEY_FILE] ?? "../../certificate/file.key",
 
   // REDIS CONFIGURATIONS
   REDIS_DB: Number(processEnv[REDIS_DB] ?? 0),
