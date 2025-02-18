@@ -12,12 +12,16 @@ const projectSchema = new Schema<IProjectModel>(
       enum: Object.values(ProjectStatus),
       required: true,
     },
-    members: [
-      {
-        id: { type: Schema.Types.ObjectId, ref: "User", required: true },
-        role: { type: String, enum: Object.values(Roles), required: true },
-      },
-    ],
+    // members: [
+    //   {
+    //     id: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    //     role: { type: String, enum: Object.values(Roles), required: true },
+    //   },
+    // ],
+    members: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    }],
     dueDate: { type: Number, required: true },
   },
   {

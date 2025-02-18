@@ -16,10 +16,11 @@ export interface IProjectModel extends Document {
   status: ProjectStatus;
   title: string;
   description: string;
-  members: {
-    id: ObjectId;
-    role: Roles;
-  }[];
+  // members: {
+  //   id: ObjectId;
+  //   role: Roles;
+  // }[];
+  members : [ObjectId]
   dueDate: number;
 }
 
