@@ -155,15 +155,23 @@ export const updateProject = async (
   res: Response
 ): Promise<any> => {
   try {
-    const { status, members, dueDate } = req.body;
+    const { status, members, dueDate, title, description } = req.body;
 
     const membersIds = members.map(
       (member: any) => new Types.ObjectId(String(member.id))
     );
 
+    // TODO : dueDate set all day
+
     const project = await Project.findByIdAndUpdate(
       req.params.id,
-      { status, membersIds, dueDate },
+      {
+        status,
+        membersIds,
+        dueDate: new Date(dueDate).getTime(),
+        title,
+        description,
+      },
       { new: true }
     );
     if (!project) {

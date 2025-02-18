@@ -1,4 +1,4 @@
-import { Document, ObjectId } from "mongoose";
+import { Document, ObjectId, Schema, Types } from "mongoose";
 import { Priority, ProjectStatus, Roles, Status } from "./globle.interface";
 
 export interface IUserModel extends Document {
@@ -30,7 +30,7 @@ export interface ITaskModel extends Document {
   title: string;
   description: string;
   status: Status;
-  assignee: ObjectId;
+  assignee: Types.ObjectId;
   priority: Priority;
   dueDate: number;
 }

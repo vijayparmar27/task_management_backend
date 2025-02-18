@@ -77,7 +77,8 @@ export const getTask = async (req: Request, res: Response): Promise<any> => {
 
 export const updateTask = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { status, assignee, priority, dueDate } = req.body;
+    const { status, assignee, priority, dueDate, title, description } =
+      req.body;
     const task = await Task.findById(req.params.id);
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
@@ -87,14 +88,14 @@ export const updateTask = async (req: Request, res: Response): Promise<any> => {
     if (status && task.status !== status) {
       const activityEntry = {
         from: task.assignee, // previous assignee or the user initiating the change
-        to: assignee || task.assignee, // new assignee if provided
+        to: new Types.ObjectId(String(assignee)) || task.assignee, // new assignee if provided
         previousStatus: task.status,
         status,
       };
 
       let log = await ActivityLogModel.findOne({ taskId: task._id });
       if (log) {
-        log.activity.push(activityEntry);
+        log.activity.push(<any>activityEntry);
         await log.save();
       } else {
         log = new ActivityLogModel({
@@ -106,9 +107,11 @@ export const updateTask = async (req: Request, res: Response): Promise<any> => {
     }
 
     task.status = status || task.status;
-    task.assignee = assignee || task.assignee;
+    task.assignee = new Types.ObjectId(String(assignee)) ?? task.assignee;
     task.priority = priority || task.priority;
-    task.dueDate = dueDate || task.dueDate;
+    task.dueDate = new Date(dueDate).getTime() || task.dueDate;
+    task.title = title || task.title;
+    task.description = description || task.description;
     await task.save();
     res.json({ message: "task update Successfully", data: { task } });
   } catch (error) {
@@ -136,7 +139,7 @@ export const updateTaskStatus = async (
 
       let log = await ActivityLogModel.findOne({ taskId: task._id });
       if (log) {
-        log.activity.push(activityEntry);
+        log.activity.push(<any>activityEntry);
         await log.save();
       } else {
         log = new ActivityLogModel({
@@ -182,7 +185,7 @@ export const reassignTask = async (
 
     let log = await ActivityLogModel.findOne({ taskId: task._id });
     if (log) {
-      log.activity.push(activityEntry);
+      log.activity.push(<any>activityEntry);
       await log.save();
     } else {
       log = new ActivityLogModel({
