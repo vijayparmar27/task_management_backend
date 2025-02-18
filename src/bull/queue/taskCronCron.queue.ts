@@ -77,5 +77,3 @@ class TaskCronQueue extends QueueBaseClass {
 }
 
 export const taskCronQueue = new TaskCronQueue();
-
-taskCronQueue.processCron();

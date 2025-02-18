@@ -63,10 +63,6 @@ export const userDetails = async (
   try {
     const { id } = req.headers;
 
-    const user = await User.findById(id).populate("members.id");
-
-    console.log(`----- user : `, JSON.stringify(user, null, 4));
-
     const userInfo = await User.aggregate([
       {
         $match: {
