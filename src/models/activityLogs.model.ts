@@ -1,4 +1,4 @@
-import { Schema, model, Document, Types } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IActivityLog } from "../@types/models.interface";
 import { Status } from "../@types/globle.interface";
 
@@ -12,7 +12,7 @@ const ActivitySchema = new Schema<IActivityLog>(
         previousStatus: {
           type: String,
           enum: Object.values(Status),
-          required: true,
+          default: Status.To_Do,
         },
         status: { type: String, enum: Object.values(Status), required: true },
       },

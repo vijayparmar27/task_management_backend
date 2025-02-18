@@ -6,7 +6,16 @@ import { bullQueue } from "./bull/index.bull";
 (() => {
   initializeConnections();
 
+  // Cron For Send mail
   bullQueue.projectCronQueue.addQueue(
+    {},
+    {
+      repeat: { cron: "*/5 * * * *" }, // repeat every 5 minutes
+    }
+  );
+
+  // Cron For Send mail
+  bullQueue.taskCronQueue.addQueue(
     {},
     {
       repeat: { cron: "*/5 * * * *" }, // repeat every 5 minutes

@@ -196,8 +196,6 @@ export const acceptInvite = async (
     const { token } = req.body;
     const { id } = req.headers;
 
-    console.log(`--- token : `, token);
-
     const decryptedToken = decryptToken(
       (<string>token).split(" ").join("+"),
       JWT_SECRET
